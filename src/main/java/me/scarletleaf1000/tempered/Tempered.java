@@ -1,6 +1,8 @@
 package me.scarletleaf1000.tempered;
 
 import com.mojang.logging.LogUtils;
+import me.scarletleaf1000.tempered.block.ModBlocks;
+import me.scarletleaf1000.tempered.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -39,14 +41,42 @@ public class Tempered
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "tempered";
     // Directly reference a slf4j logger
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public Tempered(IEventBus modEventBus, ModContainer modContainer)
     {
+        // Register the commonSetup method for modloading
+        modEventBus.addListener(this::commonSetup);
 
+        // Register ourselves for server and other game events we are interested in.
+        // Note that this is necessary if and only if we want *this* class (Tempered) to respond directly to events.
+        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+        NeoForge.EVENT_BUS.register(this);
+
+        ModItems.register(modEventBus);
+
+        ModBlocks.register(modEventBus);
+
+        // Register the item to a creative tab
+        modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
+    {
+
+    }
+
+    // Add the example block item to the building blocks tab
+    private void addCreative(BuildCreativeModeTabContentsEvent event)
+    {
+
+    }
+
+    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event)
     {
 
     }
