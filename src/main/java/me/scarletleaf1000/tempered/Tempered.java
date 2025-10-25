@@ -56,11 +56,9 @@ public class Tempered
         NeoForge.EVENT_BUS.register(this);
 
         ModItems.register(modEventBus);
-
         ModBlocks.register(modEventBus);
 
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
+        CreativeTabs.register(modEventBus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
