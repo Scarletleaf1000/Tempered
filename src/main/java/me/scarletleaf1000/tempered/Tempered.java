@@ -2,7 +2,10 @@ package me.scarletleaf1000.tempered;
 
 import com.mojang.logging.LogUtils;
 import me.scarletleaf1000.tempered.block.ModBlocks;
+import me.scarletleaf1000.tempered.block.blockEntity.ModBlockEntities;
 import me.scarletleaf1000.tempered.item.ModItems;
+import me.scarletleaf1000.tempered.screen.ModMenuTypes;
+import me.scarletleaf1000.tempered.screen.custom.CrudeForgeScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -25,6 +28,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -56,7 +60,11 @@ public class Tempered
         NeoForge.EVENT_BUS.register(this);
 
         ModItems.register(modEventBus);
+
         ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+
+        ModMenuTypes.register(modEventBus);
 
         CreativeTabs.register(modEventBus);
     }
@@ -87,6 +95,11 @@ public class Tempered
         public static void onClientSetup(FMLClientSetupEvent event)
         {
 
+        }
+
+        @SubscribeEvent
+        public static void registerScreens(RegisterMenuScreensEvent event) {
+            event.register(ModMenuTypes.CRUDE_FORGE_MENU.get(), CrudeForgeScreen::new);
         }
     }
 }
