@@ -1,5 +1,4 @@
 # Tempered
-**A mod by Scarlet**
 
 This mod is going to rework the smelting system in minecraft. It will take some ideas from mods like tinkers' construct but will end up being its own entity.
 
